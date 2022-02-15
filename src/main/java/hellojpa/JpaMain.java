@@ -1,7 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -37,13 +36,13 @@ public class JpaMain {
 //            }
 
 //            엔티티를 생성한 상태(비영속)
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("회원1");
+            Members members = new Members();
+            members.setId(100L);
+            members.setUsername("회원1");
 
 //            엔티티를 영속
             System.out.println("======== BEFORE =======");
-            entityManager.persist(member);
+            entityManager.persist(members);
             System.out.println("======== AFTER =======");
 
             transaction.commit();
