@@ -1,55 +1,37 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager em = entityManagerFactory.createEntityManager();
 
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
         try {
-//            저장
-//            Member member = new Member();
-//            member.setId(2L);
-//            member.setName("HelloB");
-//            entityManager.persist(member);
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-//            조회
-//            member = entityManager.find(Member.class, 1L);
+            Members member = new Members();
+            member.setUsername("member1");
 
-//            수정
+//            역방향(주인이 아닌 방향)만 연관관계 설정
+            team.getMembers().add(member);
+            member.setTeam(team);
+            em.persist(member);
 
-//            member.setName("helloJPA");
-
-//            전체 조회 (JPQL)
-//            List<Member> result = entityManager.createQuery("select m from Member as m", Member.class)
-//                    .setFirstResult(0)
-//                    .setMaxResults(8)
-//                    .getResultList();
-//
-//            for (Member s : result) {
-//                System.out.println(s.getId() + " / " + s.getName());
-//            }
-
-//            엔티티를 생성한 상태(비영속)
-            Members members = new Members();
-            members.setId(100L);
-            members.setUsername("회원1");
-
-//            엔티티를 영속
-            System.out.println("======== BEFORE =======");
-            entityManager.persist(members);
-            System.out.println("======== AFTER =======");
-
-            transaction.commit();
+            tx.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            e.printStackTrace();
+            tx.rollback();
         } finally {
-            entityManager.close();
+            em.close();
             entityManagerFactory.close();
         }
     }

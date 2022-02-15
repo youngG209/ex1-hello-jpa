@@ -1,13 +1,14 @@
 package jpabook.jpashop;
 
-import hellojpa.Members;
+import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class JpaMain {
+public class JpaShopMain {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
 
@@ -17,6 +18,8 @@ public class JpaMain {
         transaction.begin();
 
         try {
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
 
             transaction.commit();
         } catch (Exception e) {
