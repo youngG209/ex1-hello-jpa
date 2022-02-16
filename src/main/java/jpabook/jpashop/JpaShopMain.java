@@ -18,8 +18,8 @@ public class JpaShopMain {
         transaction.begin();
 
         try {
-            Order order = new Order();
-            order.addOrderItem(new OrderItem());
+//            Order order = new Order();
+//            order.addOrderItem(new OrderItem());
 
             transaction.commit();
         } catch (Exception e) {
